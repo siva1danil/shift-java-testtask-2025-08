@@ -84,7 +84,6 @@ public final class App {
                         stringWriter.newLine();
                     }
                 }
-                reader.close();
             } catch (Exception ex) {
                 printError(ex, file.toString());
                 errors++;
