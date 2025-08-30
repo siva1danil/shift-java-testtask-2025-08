@@ -39,7 +39,6 @@ public final class App {
         Path floatPath = opt.output.resolve(opt.prefix + "floats.txt");
         Path stringPath = opt.output.resolve(opt.prefix + "strings.txt");
 
-        BufferedReader reader = null;
         BufferedWriter intWriter = null, floatWriter = null, stringWriter = null;
 
         StatsNumeric statsInt = new StatsNumeric(), statsFloat = new StatsNumeric();
@@ -49,8 +48,7 @@ public final class App {
 
         // Основной цикл
         for (Path file : opt.input) {
-            try {
-                reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+            try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
                 for (String line; (line = reader.readLine()) != null;) {
                     LineClassifier.Type type = LineClassifier.classify(line);
                     try {
