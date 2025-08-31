@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -57,5 +59,21 @@ class CliOptionsTest {
         assertEquals(Path.of("input1.txt"), opt.input.get(0));
         assertEquals(Path.of("input2.txt"), opt.input.get(1));
         assertEquals(Path.of("input3.txt"), opt.input.get(2));
+    }
+
+    @Test
+    void testPrintHelp() {
+        PrintStream out = System.out;
+        try {
+            ByteArrayOutputStream content = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(content));
+
+            CliOptions.printHelp();
+
+            String help = content.toString();
+            assertFalse(help.isBlank());
+        } finally {
+            System.setOut(out);
+        }
     }
 }

@@ -34,10 +34,11 @@ public class StatsNumericTest {
     public void testAddMultipleValues() {
         StatsNumeric stats = new StatsNumeric();
         stats.add(new BigDecimal("5"));
-        stats.add(new BigDecimal("15"));
+        stats.add(new BigDecimal("25"));
         stats.add(new BigDecimal("10"));
-        assertEquals("количество=3", stats.toShortString());
-        assertEquals("количество=3, мин=5, макс=15, сумма=30, сред=10", stats.toFullString());
+        stats.add(new BigDecimal("0"));
+        assertEquals("количество=4", stats.toShortString());
+        assertEquals("количество=4, мин=0, макс=25, сумма=40, сред=10", stats.toFullString());
     }
 
     @Test
