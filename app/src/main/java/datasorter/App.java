@@ -14,6 +14,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 public final class App {
+    private static final int EXIT_OK = 0;
+    private static final int EXIT_ERROR = 1;
+
     public static void main(String[] args) {
         System.exit(new App().run(args));
     }
@@ -26,13 +29,17 @@ public final class App {
         } catch (IllegalArgumentException ex) {
             System.err.println("Ошибка: " + ex.getMessage());
             CliOptions.printHelp();
-            return 1;
+            return EXIT_ERROR;
         }
 
         // Необходимые переменные
         OpenOption[] opts = opt.append
-                ? new OpenOption[] { StandardOpenOption.CREATE, StandardOpenOption.APPEND }
-                : new OpenOption[] { StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
+                ? new OpenOption[] {
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.APPEND }
+                : new OpenOption[] {
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.TRUNCATE_EXISTING,
                         StandardOpenOption.WRITE };
 
         Path intPath = opt.output.resolve(opt.prefix + "integers.txt");
@@ -94,7 +101,7 @@ public final class App {
         System.out.println(errors > 0 ? "Завершено с ошибками." : "Завершено успешно.");
         closeAll(intWriter, floatWriter, stringWriter);
         printStats(opt, statsInt, statsFloat, statsString);
-        return errors > 0 ? 1 : 0;
+        return errors > 0 ? EXIT_ERROR : EXIT_OK;
     }
 
     private static BufferedWriter getOrCreateWriter(BufferedWriter writer, Path path, OpenOption... opts)
