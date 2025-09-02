@@ -1,9 +1,11 @@
 package datasorter;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.MathContext;
 
 final class StatsNumeric {
+    private static final MathContext MC = MathContext.DECIMAL128;
+
     private long count = 0;
     private BigDecimal min = null;
     private BigDecimal max = null;
@@ -28,7 +30,7 @@ final class StatsNumeric {
     String toFullString() {
         if (count == 0)
             return String.format("количество=%d", count);
-        BigDecimal avg = sum.divide(BigDecimal.valueOf(count), RoundingMode.HALF_UP);
+        BigDecimal avg = sum.divide(BigDecimal.valueOf(count), MC);
         return String.format("количество=%d, мин=%s, макс=%s, сумма=%s, сред=%s", count, min.toPlainString(),
                 max.toPlainString(), sum.toPlainString(), avg.toPlainString());
     }
