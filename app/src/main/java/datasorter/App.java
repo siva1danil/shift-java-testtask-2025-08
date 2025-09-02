@@ -124,17 +124,19 @@ public final class App {
     }
 
     private static void printStats(CliOptions opt, StatsNumeric ints, StatsNumeric floats, StatsString strings) {
-        System.out.println();
         if (opt.statsShort) {
+            System.out.println();
             System.out.println("Целые числа:        " + ints.toShortString());
             System.out.println("Вещественные числа: " + floats.toShortString());
             System.out.println("Строки:             " + strings.toShortString());
+            System.out.println();
         } else if (opt.statsFull) {
+            System.out.println();
             System.out.println("Целые числа:        " + ints.toFullString());
             System.out.println("Вещественные числа: " + floats.toFullString());
             System.out.println("Строки:             " + strings.toFullString());
+            System.out.println();
         }
-        System.out.println();
     }
 
     private static void printError(Exception ex, String context) {
